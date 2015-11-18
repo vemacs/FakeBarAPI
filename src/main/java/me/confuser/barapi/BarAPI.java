@@ -20,11 +20,13 @@ public class BarAPI extends JavaPlugin {
     private static ActionBarMessageHandler handler;
     private static Map<UUID, BukkitTask> timers = new HashMap<>();
     private static BarAPI instance;
+    private static boolean actuallyRemove;
 
     @Override
     public void onEnable() {
         instance = this;
         handler = new ActionBarMessageHandler(this);
+        actuallyRemove = getConfig().getBoolean("actually-remove", false);
     }
 
     @Override
@@ -61,7 +63,11 @@ public class BarAPI extends JavaPlugin {
 
     public static void setMessage(String message, int seconds) {
         for (Player player : Bukkit.getOnlinePlayers()) {
-            setMessage(player, message, seconds);
+            if (actuallyRemove) {
+                setMessage(player, message, seconds);
+            } else {
+                setMessage(player, message);
+            }
         }
     }
 
@@ -74,7 +80,7 @@ public class BarAPI extends JavaPlugin {
             @Override
             public void run() {
                 Player p = Bukkit.getPlayer(uuid);
-                if (p != null) handler.removeMessage(p);
+                if (p != null) removeBar(p);
             }
         }, seconds * 20L));
 
