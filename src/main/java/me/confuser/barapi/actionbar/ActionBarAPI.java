@@ -45,6 +45,9 @@ public class ActionBarAPI {
             Object serialized = nmsChatSerializer.getMethod("a", String.class).invoke(null, "{\"text\": \"" + msg + "\"}");
             Object packet;
             if (version.startsWith("v1_7")) {
+                if (!hasNewProtocol(receivingPacket)) {
+                    return;
+                }
                 packet = chatConstructor.newInstance(serialized, 2);
             } else {
                 packet = chatConstructor.newInstance(serialized, (byte) 2);
@@ -88,5 +91,13 @@ public class ActionBarAPI {
 
     private static String getPacketPlayOutChat() {
         return "net.minecraft.server." + version + ".PacketPlayOutChat";
+    }
+
+    private static boolean hasNewProtocol(Player player) {
+        try {
+            return GetVersionUtil.hasNewProtocol(player);
+        } catch (Throwable t) {
+            return true;
+        }
     }
 }
