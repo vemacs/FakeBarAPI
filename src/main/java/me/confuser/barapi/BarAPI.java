@@ -95,7 +95,9 @@ public class BarAPI extends JavaPlugin {
         if (!hasBar(player))
             return;
 
-        handler.removeMessage(player);
+        if (actuallyRemove) {
+            handler.removeMessage(player);
+        }
         cancelTimer(player);
     }
 
