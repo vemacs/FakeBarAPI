@@ -7,9 +7,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ActionBarMessageHandler {
-    private Map<UUID, String> persistentMessages = new HashMap<>();
+    private Map<UUID, String> persistentMessages = new ConcurrentHashMap<>();
     private BukkitTask task;
 
     public ActionBarMessageHandler(Plugin plugin) {
