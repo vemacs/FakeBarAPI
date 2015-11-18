@@ -83,10 +83,10 @@ public class ActionBarAPI {
 
     private static String getChatSerializerClasspath() {
         int minorVersion = Integer.parseInt(version.split("R")[1]);
-        if (version.startsWith("v1_8_R") && minorVersion >= 2) {
-            return "net.minecraft.server." + version + ".IChatBaseComponent$ChatSerializer";
+        if (version.startsWith("v1_7_R") || (version.startsWith("v1_8_R") && minorVersion < 2)) {
+            return "net.minecraft.server." + version + ".ChatSerializer";
         }
-        return "net.minecraft.server." + version + ".ChatSerializer";
+        return "net.minecraft.server." + version + ".IChatBaseComponent$ChatSerializer";
     }
 
     private static String getPacketPlayOutChat() {
