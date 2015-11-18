@@ -1,0 +1,4 @@
+name: BarAPI
+main: me.confuser.barapi.BarAPI
+author: vemacs
+version: ${project.version}-${git.branch}-${git.commit.id.abbrev}
